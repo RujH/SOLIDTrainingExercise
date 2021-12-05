@@ -4,6 +4,33 @@ using System.Text;
 
 namespace Sample
 {
+    /// <summary>
+    /// Applying OCP 
+    /// </summary>
+    public class GetDefaultMarkUpFoam : LineItemPreset
+    {
+        public override decimal GetDefaultMarkUp(MaterialCategoryEnum categoryId)
+        {
+            return .6M;
+        }
+    }
+
+    public class GetDefaultMarkUpFiberglass : LineItemPreset
+    {
+        public override decimal GetDefaultMarkUp(MaterialCategoryEnum categoryId)
+        {
+            return .57M;
+        }
+    }
+
+    public class GetDefaultMarkUpAtticblow : LineItemPreset
+    {
+        public override decimal GetDefaultMarkUp(MaterialCategoryEnum categoryId)
+        {
+            return 0M;
+        }
+    }
+
     public class LineItemPreset
     {
         public LineItemPreset(string description, decimal? depth, decimal? rValuePerInch, int? rValue, decimal? yield, decimal? laborRate, decimal? discount, decimal? markUp,
@@ -29,7 +56,7 @@ namespace Sample
         }
 
         //private constructor for EF
-        private LineItemPreset()
+        public LineItemPreset()
         {
         }
 
@@ -45,8 +72,10 @@ namespace Sample
         public bool Taxable { get; private set; } = true;
         public bool SurchargeExempt { get; private set; } = false;
 
-        public decimal GetDefaultMarkUp(MaterialCategoryEnum categoryId)
+        public virtual decimal GetDefaultMarkUp(MaterialCategoryEnum categoryId) { return 0M; }
+        /*public decimal GetDefaultMarkUp(MaterialCategoryEnum categoryId)
         {
+
             switch (categoryId)
             {
                 //TODO: Remove Magic Values
@@ -62,7 +91,7 @@ namespace Sample
                 default:
                     return 0M;
             }
-        }
+        }*/
 
         public decimal GetDefaultLaborRate(MaterialCategoryEnum categoryId)
         {
@@ -82,4 +111,5 @@ namespace Sample
             }
         }
     }
+
 }

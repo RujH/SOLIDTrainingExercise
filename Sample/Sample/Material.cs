@@ -4,7 +4,11 @@ using System.Text;
 
 namespace Sample
 {
-    public class Material
+
+    /// <summary>
+    /// Applying ISP
+    /// </summary>
+    public class Material : IMaterialSetCreateAuditInformation, IMaterialSetUpdateAuditInformation
     {
         private Material()
         {
@@ -22,13 +26,13 @@ namespace Sample
         public int? DeletedBy { get; private set; }
         public bool Deleted { get; private set; }
 
-        protected void SetCreateAuditInformation(int createdByUserId)
+        void IMaterialSetCreateAuditInformation.SetCreateAuditInformation(int createdByUserId)
         {
             CreatedBy = createdByUserId;
             CreatedDate = DateTime.Now;
         }
 
-        internal void SetUpdateAuditInformation(int updatedByUserId, DateTime updatedDate)
+        void IMaterialSetUpdateAuditInformation.SetUpdateAuditInformation(int updatedByUserId, DateTime updatedDate)
         {
             UpdatedBy = updatedByUserId;
             UpdatedDate = updatedDate;

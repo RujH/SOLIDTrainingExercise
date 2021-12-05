@@ -1,0 +1,9 @@
+C:\Users\ruj.haan\Desktop\Technical Training\Design Principles\SOLIDTrainingExercise\Sample\Sample\bin\Debug\netcoreapp3.0\Sample.deps.json
+C:\Users\ruj.haan\Desktop\Technical Training\Design Principles\SOLIDTrainingExercise\Sample\Sample\bin\Debug\netcoreapp3.0\Sample.dll
+C:\Users\ruj.haan\Desktop\Technical Training\Design Principles\SOLIDTrainingExercise\Sample\Sample\bin\Debug\netcoreapp3.0\Sample.pdb
+C:\Users\ruj.haan\Desktop\Technical Training\Design Principles\SOLIDTrainingExercise\Sample\Sample\obj\Debug\netcoreapp3.0\Sample.csproj.AssemblyReference.cache
+C:\Users\ruj.haan\Desktop\Technical Training\Design Principles\SOLIDTrainingExercise\Sample\Sample\obj\Debug\netcoreapp3.0\Sample.AssemblyInfoInputs.cache
+C:\Users\ruj.haan\Desktop\Technical Training\Design Principles\SOLIDTrainingExercise\Sample\Sample\obj\Debug\netcoreapp3.0\Sample.AssemblyInfo.cs
+C:\Users\ruj.haan\Desktop\Technical Training\Design Principles\SOLIDTrainingExercise\Sample\Sample\obj\Debug\netcoreapp3.0\Sample.csproj.CoreCompileInputs.cache
+C:\Users\ruj.haan\Desktop\Technical Training\Design Principles\SOLIDTrainingExercise\Sample\Sample\obj\Debug\netcoreapp3.0\Sample.dll
+C:\Users\ruj.haan\Desktop\Technical Training\Design Principles\SOLIDTrainingExercise\Sample\Sample\obj\Debug\netcoreapp3.0\Sample.pdb
