@@ -1,12 +1,12 @@
 {
   "version": 2,
-  "dgSpecHash": "+fTVuXwHuYQXeVLkMDH2mxj5jJjXB+OcxATQsbO5PK4EPdzanA+ilz0P9JUNSqdtB4o5sy0Lx9zw+5W2AY72MA==",
+  "dgSpecHash": "iSyquVeVF37GMUwOTKf8pIsGjlV5jGkyjiFMMzLWlWAWBEKBaojt148cJMNRpx5F6ugrATMF0XkvnNf1VOtuCA==",
   "success": true,
-  "projectFilePath": "C:\\Users\\ruj.haan\\Desktop\\Technical Training\\Design Principles\\SOLIDTrainingExercise\\Sample\\Sample\\Sample.csproj",
+  "projectFilePath": "C:\\Users\\Ruj\\Desktop\\TechnicalTraining\\SOLIDTrainingExercise\\Sample\\Sample\\Sample.csproj",
   "expectedPackageFiles": [
-    "C:\\Users\\ruj.haan\\.nuget\\packages\\microsoft.aspnetcore.app.ref\\3.0.1\\microsoft.aspnetcore.app.ref.3.0.1.nupkg.sha512",
-    "C:\\Users\\ruj.haan\\.nuget\\packages\\microsoft.windowsdesktop.app.ref\\3.0.0\\microsoft.windowsdesktop.app.ref.3.0.0.nupkg.sha512",
-    "C:\\Users\\ruj.haan\\.nuget\\packages\\microsoft.netcore.app.ref\\3.0.0\\microsoft.netcore.app.ref.3.0.0.nupkg.sha512"
+    "C:\\Users\\Ruj\\.nuget\\packages\\microsoft.aspnetcore.app.ref\\3.0.1\\microsoft.aspnetcore.app.ref.3.0.1.nupkg.sha512",
+    "C:\\Users\\Ruj\\.nuget\\packages\\microsoft.netcore.app.ref\\3.0.0\\microsoft.netcore.app.ref.3.0.0.nupkg.sha512",
+    "C:\\Users\\Ruj\\.nuget\\packages\\microsoft.windowsdesktop.app.ref\\3.0.0\\microsoft.windowsdesktop.app.ref.3.0.0.nupkg.sha512"
   ],
   "logs": []
 }

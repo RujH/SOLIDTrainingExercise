@@ -9,7 +9,7 @@ namespace Sample
     /// </summary>
 
     #region OCP
-    public class AmountPerContainerEnumCheckAccessory : ContainerClass
+    public class AmountPerContainerEnumCheckAccessory : MaterialClass
     {
         public override decimal AmountPerContainterEnumCheck(MaterialCategoryEnum categoryEnum)
         {
@@ -17,7 +17,7 @@ namespace Sample
         }
     }
 
-    public class AmountPerContainerEnumCheckAtticblow : ContainerClass
+    public class AmountPerContainerEnumCheckAtticblow : MaterialClass
     {
         public override decimal AmountPerContainterEnumCheck(MaterialCategoryEnum categoryEnum)
         {
@@ -25,7 +25,7 @@ namespace Sample
         }
     }
 
-    public class AmountPerContainerEnumCheckFiberglass : ContainerClass
+    public class AmountPerContainerEnumCheckFiberglass : MaterialClass
     {
         public override decimal AmountPerContainterEnumCheck(MaterialCategoryEnum categoryEnum)
         {
@@ -33,7 +33,7 @@ namespace Sample
         }
     }
 
-    public class AmountPerContainerEnumCheckFoam : ContainerClass
+    public class AmountPerContainerEnumCheckFoam : MaterialClass
     {
         public override decimal AmountPerContainterEnumCheck(MaterialCategoryEnum categoryEnum)
         {
@@ -41,7 +41,7 @@ namespace Sample
         }
     }
 
-    public class AmountPerContainerEnumCheckPaint : ContainerClass
+    public class AmountPerContainerEnumCheckPaint : MaterialClass
     {
         public override decimal AmountPerContainterEnumCheck(MaterialCategoryEnum categoryEnum)
         {
@@ -51,7 +51,8 @@ namespace Sample
     #endregion
 
     #region SRP
-    public class ContainerClass
+
+    public class MaterialClass
     {
 
         private MaterialCategoryEnum Category { get; set; }
@@ -60,8 +61,31 @@ namespace Sample
         public decimal Quantity { get; internal set; } = 0;
         public decimal? Depth { get; internal set; }
         public virtual decimal? RValue { get; internal set; }
+        public decimal Price { get; set; }
         private decimal amountPerContainer;
         public virtual decimal AmountPerContainterEnumCheck(MaterialCategoryEnum categoryEnum) { return 0M; }
+
+        public WorkArea WorkArea { get; internal set; }
+        
+
+        private string BaseDescription => $"{WorkArea?.Name} {MaterialRecord?.Material?.Name}";
+
+        public string Name
+        {
+            get
+            {
+                if (Category == MaterialCategoryEnum.Atticblow)
+                {
+                    return $"R{Math.Round(RValue ?? 0, 0)} {BaseDescription}";
+                }
+                else if (Category == MaterialCategoryEnum.Foam)
+                {
+                    return $"R{Math.Round(RValue ?? 0, 0)} {MaterialRecord?.Material?.Name} {Math.Round(Depth ?? 0, 2)}in.";
+                }
+
+                return BaseDescription;
+            }
+        }
 
 
         public decimal AmountPerContainer
@@ -69,22 +93,22 @@ namespace Sample
             get
             {
                 return AmountPerContainterEnumCheck(Category);
-/*                switch (Category)
-                {
-                    case MaterialCategoryEnum.Accessory:
-                        return 1;
-                    case MaterialCategoryEnum.Atticblow:
-                        return Settings.Instance.AtticBlowSqftBase / MaterialRecord.GetRValue((RValueEnum)(RValue ?? 0));
-                    case MaterialCategoryEnum.Fiberglass:
-                        return MaterialRecord.AmountPerContainer.Value;
-                    case MaterialCategoryEnum.Foam:
-                        return (Quantity * Depth.Value) / Yield.Value;
-                    case MaterialCategoryEnum.Paint:
-                        return Yield.Value;
-                    default:
-                        return 0;
+                /*                switch (Category)
+                                {
+                                    case MaterialCategoryEnum.Accessory:
+                                        return 1;
+                                    case MaterialCategoryEnum.Atticblow:
+                                        return Settings.Instance.AtticBlowSqftBase / MaterialRecord.GetRValue((RValueEnum)(RValue ?? 0));
+                                    case MaterialCategoryEnum.Fiberglass:
+                                        return MaterialRecord.AmountPerContainer.Value;
+                                    case MaterialCategoryEnum.Foam:
+                                        return (Quantity * Depth.Value) / Yield.Value;
+                                    case MaterialCategoryEnum.Paint:
+                                        return Yield.Value;
+                                    default:
+                                        return 0;
 
-                }*/
+                                }*/
             }
             internal set
             {
@@ -133,16 +157,10 @@ namespace Sample
                 };
             }
         }
-    }
 
-    public class MaterialClass
-    {
-        private MaterialCategoryEnum Category { get; set; }
-        public decimal Quantity { get; internal set; } = 0;
-        public decimal Price { get; set; }
-        public decimal? Yield { get; internal set; } = 0;
-        private ContainerClass containerClass = new ContainerClass();
 
+        
+      
         public virtual decimal MaterialCost
         {
             get
@@ -156,11 +174,11 @@ namespace Sample
                     case MaterialCategoryEnum.Accessory:
                         return Price * Quantity;
                     case MaterialCategoryEnum.Atticblow:
-                        return Price * containerClass.ContainersRequired;
+                        return Price * ContainersRequired;
                     case MaterialCategoryEnum.Fiberglass:
                         return Price * Quantity;
                     case MaterialCategoryEnum.Foam:
-                        return Price * containerClass.AmountPerContainer;
+                        return Price * AmountPerContainer;
                     case MaterialCategoryEnum.Paint:
                         return Price * (Quantity / Yield.Value);
                     default:
@@ -170,7 +188,9 @@ namespace Sample
         }
     }
 
-    public class ProfitClass
+
+
+    public abstract class ProfitClass
     {
 
         private MaterialClass materialClass = new MaterialClass();
@@ -181,6 +201,15 @@ namespace Sample
         public decimal MarkUp { get; internal set; } = 0;
         public decimal TaxRate { get; internal set; } = .1M;
         public MaterialCategoryEnum Category { get; internal set; }
+
+
+        public void UpdateEstimatedFields(decimal containersRequired, decimal taxRate)
+        {
+            UpdateEstimatedQuantityForNewContainersRequired(containersRequired);
+            TaxRate = taxRate;
+        }
+
+        protected abstract void UpdateEstimatedQuantityForNewContainersRequired(decimal containersRequired);
 
         #region DIP
         IHelpers Helper = new Helpers();
@@ -226,79 +255,16 @@ namespace Sample
         }
     }
 
-    public class UpdateMarkClass
-    {
 
-        public LineItemStatusEnum Status { get; internal set; } = LineItemStatusEnum.Normal;
-        public MaterialRecord MaterialRecord { get; internal set; }
 
-        internal void MarkReplaced()
-        {
-            if (Status == LineItemStatusEnum.Normal && MaterialRecord.Material.Id != (int)MaterialEnum.VentChute)
-            {
-                Status = LineItemStatusEnum.Replaced;
-            }
-        }
+  
 
-        internal void MarkNotReplaced()
-        {
-            if (Status == LineItemStatusEnum.Replaced)
-            {
-                Status = LineItemStatusEnum.Normal;
-            }
-        }
-    }
-
-    public class BaseDescriptionClass
-    {
-        public virtual decimal? RValue { get; internal set; }
-        public MaterialRecord MaterialRecord { get; internal set; }
-        public WorkArea WorkArea { get; internal set; }
-        public MaterialCategoryEnum Category { get; internal set; }
-        public decimal? Depth { get; internal set; }
-
-        private string BaseDescription => $"{WorkArea?.Name} {MaterialRecord?.Material?.Name}";
-
-        public string Name
-        {
-            get
-            {
-                if (Category == MaterialCategoryEnum.Atticblow)
-                {
-                    return $"R{Math.Round(RValue ?? 0, 0)} {BaseDescription}";
-                }
-                else if (Category == MaterialCategoryEnum.Foam)
-                {
-                    return $"R{Math.Round(RValue ?? 0, 0)} {MaterialRecord?.Material?.Name} {Math.Round(Depth ?? 0, 2)}in.";
-                }
-
-                return BaseDescription;
-            }
-        }
-    
-    }
-    public abstract class UpdateContainerEstimaterClass
-    {
-
-        public decimal TaxRate { get; internal set; } = .1M;
-
-        public void UpdateEstimatedFields(decimal containersRequired, decimal taxRate)
-        {
-            UpdateEstimatedQuantityForNewContainersRequired(containersRequired);
-            TaxRate = taxRate;
-        }
-
-        protected abstract void UpdateEstimatedQuantityForNewContainersRequired(decimal containersRequired);
-    }
     #endregion
 
     public abstract class LineItem
     {
-        private ContainerClass containerClass = new ContainerClass();
+       
         private MaterialClass materialClass = new MaterialClass();
-        private ProfitClass profitClass = new ProfitClass();
-        private UpdateMarkClass updateMarkClass = new UpdateMarkClass();
-        private BaseDescriptionClass baseDescriptionClass = new BaseDescriptionClass();
 
         public decimal Price { get; set; }
         public int EstimateId { get; internal set; }
@@ -326,6 +292,22 @@ namespace Sample
         public LineItemCategoryEnum LineItemCategory { get; internal set; }
         public MaterialCategoryEnum Category { get; internal set; }
         public int? WorkOrderId { get; internal set; }
+
+        internal void MarkReplaced()
+        {
+            if (Status == LineItemStatusEnum.Normal && MaterialRecord.Material.Id != (int)MaterialEnum.VentChute)
+            {
+                Status = LineItemStatusEnum.Replaced;
+            }
+        }
+
+        internal void MarkNotReplaced()
+        {
+            if (Status == LineItemStatusEnum.Replaced)
+            {
+                Status = LineItemStatusEnum.Normal;
+            }
+        }
 
         private decimal amountPerContainer;
 
