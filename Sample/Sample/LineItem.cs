@@ -9,7 +9,7 @@ namespace Sample
     /// </summary>
 
     #region OCP
-    public class AmountPerContainerEnumCheckAccessory : MaterialClass
+   /* public class AmountPerContainerEnumCheckAccessory : MaterialClass
     {
         public override decimal AmountPerContainterEnumCheck(MaterialCategoryEnum categoryEnum)
         {
@@ -47,7 +47,7 @@ namespace Sample
         {
             return Yield.Value;
         }
-    }
+    }*/
     #endregion
 
     #region SRP
@@ -88,73 +88,32 @@ namespace Sample
         }
 
 
-        public decimal AmountPerContainer
+        public virtual decimal AmountPerContainer
+        {
+            get 
+            {
+                return 0;
+            }
+        }
+        
+            
+            
+            
+        
+
+        public virtual decimal ContainersRequired
         {
             get
-            {
-                return AmountPerContainterEnumCheck(Category);
-                /*                switch (Category)
-                                {
-                                    case MaterialCategoryEnum.Accessory:
-                                        return 1;
-                                    case MaterialCategoryEnum.Atticblow:
-                                        return Settings.Instance.AtticBlowSqftBase / MaterialRecord.GetRValue((RValueEnum)(RValue ?? 0));
-                                    case MaterialCategoryEnum.Fiberglass:
-                                        return MaterialRecord.AmountPerContainer.Value;
-                                    case MaterialCategoryEnum.Foam:
-                                        return (Quantity * Depth.Value) / Yield.Value;
-                                    case MaterialCategoryEnum.Paint:
-                                        return Yield.Value;
-                                    default:
-                                        return 0;
-
-                                }*/
-            }
-            internal set
-            {
-                amountPerContainer = value;
+            { 
+                return 0;
             }
         }
 
-        public decimal ContainersRequired
+        public virtual string ContainerName
         {
-            get
-            {
-                switch (Category)
-                {
-                    case MaterialCategoryEnum.Accessory:
-                        return 1;
-                    case MaterialCategoryEnum.Atticblow:
-                        return Quantity / AmountPerContainer;
-                    case MaterialCategoryEnum.Fiberglass:
-                        return Quantity / AmountPerContainer;
-                    case MaterialCategoryEnum.Foam:
-                        return AmountPerContainer;
-                    case MaterialCategoryEnum.Paint:
-                        return Quantity / AmountPerContainer;
-                    default:
-                        return 0;
-                }
-            }
-        }
-
-        public string ContainerName
-        {
-            get
-            {
-                switch (Category)
-                {
-                    case MaterialCategoryEnum.Atticblow:
-                        return "Bags";
-                    case MaterialCategoryEnum.Fiberglass:
-                        return "Bags";
-                    case MaterialCategoryEnum.Foam:
-                        return "Sets";
-                    case MaterialCategoryEnum.Paint:
-                        return "Gallons";
-                    default:
-                        return "";
-                };
+            get 
+            { 
+                return ""; 
             }
         }
 
@@ -164,27 +123,10 @@ namespace Sample
         public virtual decimal MaterialCost
         {
             get
-            {
-                switch (Category)
-                {
-                    case MaterialCategoryEnum.Fee:
-                        return 0;
-                    case MaterialCategoryEnum.Removal:
-                        return 0;
-                    case MaterialCategoryEnum.Accessory:
-                        return Price * Quantity;
-                    case MaterialCategoryEnum.Atticblow:
-                        return Price * ContainersRequired;
-                    case MaterialCategoryEnum.Fiberglass:
-                        return Price * Quantity;
-                    case MaterialCategoryEnum.Foam:
-                        return Price * AmountPerContainer;
-                    case MaterialCategoryEnum.Paint:
-                        return Price * (Quantity / Yield.Value);
-                    default:
-                        throw new InvalidOperationException("Invalid Material Type");
-                }
+            { 
+                throw new InvalidOperationException("Invalid Material Type");
             }
+            
         }
     }
 
@@ -215,19 +157,11 @@ namespace Sample
         IHelpers Helper = new Helpers();
         #endregion
 
-        public decimal Profit
+        public virtual  decimal Profit
         {
             get
-            {
-                switch (Category)
-                {
-                    case MaterialCategoryEnum.Fee:
-                        return Total;
-                    case MaterialCategoryEnum.Removal:
-                        return Total - TotalLabor - -(TotalLabor * Settings.Instance.TotalLaborSurchargePercent);
-                    default:
-                        return Total - (TotalLabor + materialClass.MaterialCost) - (materialClass.MaterialCost * TaxRate) - (TotalLabor * Settings.Instance.TotalLaborSurchargePercent);
-                }
+            { 
+                return Total - (TotalLabor + materialClass.MaterialCost) - (materialClass.MaterialCost * TaxRate) - (TotalLabor * Settings.Instance.TotalLaborSurchargePercent);
             }
         }
         public decimal UnitPrice => Total / (Quantity == 0 ? 1 : Quantity);
@@ -235,22 +169,18 @@ namespace Sample
 
 
 
-        public decimal Total
+        public virtual decimal Total
         {
             get
             {
-                switch (Category)
-                {
-                    case MaterialCategoryEnum.Fee:
-                        return Price + LaborRate;
-                    default:
+                
                         decimal markup = MarkUp != 0 ? MarkUp : 1;
                         decimal adjustedLaborRate = (LaborRate * Quantity) / markup;
                         decimal adjustedMaterialCost = materialClass.MaterialCost / markup;
                         decimal tax = materialClass.MaterialCost * TaxRate;
                         decimal laborRateSurcharge = (LaborRate * Quantity * Settings.Instance.TotalLaborSurchargePercent);
                         return Helper.RoundUp(adjustedMaterialCost + adjustedLaborRate + tax + laborRateSurcharge, 2);
-                }
+                
             }
         }
     }
