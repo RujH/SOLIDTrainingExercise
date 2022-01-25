@@ -13,11 +13,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Ruj\\Desktop\\New folder\\SOLIDTrainingExercise\\Sample\\Sample\\Sample.csproj",
+      "projectUniqueName": "C:\\Users\\Ruj\\Desktop\\TechnicalTraining\\SOLIDTrainingExercise\\Sample\\Sample\\Sample.csproj",
       "projectName": "Sample",
-      "projectPath": "C:\\Users\\Ruj\\Desktop\\New folder\\SOLIDTrainingExercise\\Sample\\Sample\\Sample.csproj",
+      "projectPath": "C:\\Users\\Ruj\\Desktop\\TechnicalTraining\\SOLIDTrainingExercise\\Sample\\Sample\\Sample.csproj",
       "packagesPath": "C:\\Users\\Ruj\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Ruj\\Desktop\\New folder\\SOLIDTrainingExercise\\Sample\\Sample\\obj\\",
+      "outputPath": "C:\\Users\\Ruj\\Desktop\\TechnicalTraining\\SOLIDTrainingExercise\\Sample\\Sample\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\Ruj\\AppData\\Roaming\\NuGet\\NuGet.Config",

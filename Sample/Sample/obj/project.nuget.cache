@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "YTOL6YkPyPCUoPujgp4btTGm898PAJbEKUdlRe9cyWItoGtK1/cp6oNID1ys1kRvUnmmo8nTJqHRVPIrjTkj/w==",
+  "dgSpecHash": "iSyquVeVF37GMUwOTKf8pIsGjlV5jGkyjiFMMzLWlWAWBEKBaojt148cJMNRpx5F6ugrATMF0XkvnNf1VOtuCA==",
   "success": true,
-  "projectFilePath": "C:\\Users\\Ruj\\Desktop\\New folder\\SOLIDTrainingExercise\\Sample\\Sample\\Sample.csproj",
+  "projectFilePath": "C:\\Users\\Ruj\\Desktop\\TechnicalTraining\\SOLIDTrainingExercise\\Sample\\Sample\\Sample.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Ruj\\.nuget\\packages\\microsoft.aspnetcore.app.ref\\3.0.1\\microsoft.aspnetcore.app.ref.3.0.1.nupkg.sha512",
     "C:\\Users\\Ruj\\.nuget\\packages\\microsoft.netcore.app.ref\\3.0.0\\microsoft.netcore.app.ref.3.0.0.nupkg.sha512",

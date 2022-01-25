@@ -9,64 +9,55 @@ namespace Sample
     /// </summary>
 
     #region OCP
-   /* public class AmountPerContainerEnumCheckAccessory : MaterialClass
-    {
-        public override decimal AmountPerContainterEnumCheck(MaterialCategoryEnum categoryEnum)
-        {
-            return 1M;
-        }
-    }
+    /* public class AmountPerContainerEnumCheckAccessory : MaterialClass
+     {
+         public override decimal AmountPerContainterEnumCheck(MaterialCategoryEnum categoryEnum)
+         {
+             return 1M;
+         }
+     }
 
-    public class AmountPerContainerEnumCheckAtticblow : MaterialClass
-    {
-        public override decimal AmountPerContainterEnumCheck(MaterialCategoryEnum categoryEnum)
-        {
-            return Settings.Instance.AtticBlowSqftBase / MaterialRecord.GetRValue((RValueEnum)(RValue ?? 0));
-        }
-    }
+     public class AmountPerContainerEnumCheckAtticblow : MaterialClass
+     {
+         public override decimal AmountPerContainterEnumCheck(MaterialCategoryEnum categoryEnum)
+         {
+             return Settings.Instance.AtticBlowSqftBase / MaterialRecord.GetRValue((RValueEnum)(RValue ?? 0));
+         }
+     }
 
-    public class AmountPerContainerEnumCheckFiberglass : MaterialClass
-    {
-        public override decimal AmountPerContainterEnumCheck(MaterialCategoryEnum categoryEnum)
-        {
-            return MaterialRecord.AmountPerContainer.Value;
-        }
-    }
+     public class AmountPerContainerEnumCheckFiberglass : MaterialClass
+     {
+         public override decimal AmountPerContainterEnumCheck(MaterialCategoryEnum categoryEnum)
+         {
+             return MaterialRecord.AmountPerContainer.Value;
+         }
+     }
 
-    public class AmountPerContainerEnumCheckFoam : MaterialClass
-    {
-        public override decimal AmountPerContainterEnumCheck(MaterialCategoryEnum categoryEnum)
-        {
-            return (Quantity * Depth.Value) / Yield.Value;
-        }
-    }
+     public class AmountPerContainerEnumCheckFoam : MaterialClass
+     {
+         public override decimal AmountPerContainterEnumCheck(MaterialCategoryEnum categoryEnum)
+         {
+             return (Quantity * Depth.Value) / Yield.Value;
+         }
+     }
 
-    public class AmountPerContainerEnumCheckPaint : MaterialClass
-    {
-        public override decimal AmountPerContainterEnumCheck(MaterialCategoryEnum categoryEnum)
-        {
-            return Yield.Value;
-        }
-    }*/
+     public class AmountPerContainerEnumCheckPaint : MaterialClass
+     {
+         public override decimal AmountPerContainterEnumCheck(MaterialCategoryEnum categoryEnum)
+         {
+             return Yield.Value;
+         }
+     }*/
     #endregion
 
     #region SRP
 
-    public class MaterialClass
+    public abstract class MaterialClass : LineItem
     {
 
-        private MaterialCategoryEnum Category { get; set; }
-        public MaterialRecord MaterialRecord { get; internal set; }
-        public decimal? Yield { get; internal set; } = 0;
-        public decimal Quantity { get; internal set; } = 0;
-        public decimal? Depth { get; internal set; }
-        public virtual decimal? RValue { get; internal set; }
-        public decimal Price { get; set; }
-        private decimal amountPerContainer;
+
         public virtual decimal AmountPerContainterEnumCheck(MaterialCategoryEnum categoryEnum) { return 0M; }
 
-        public WorkArea WorkArea { get; internal set; }
-        
 
         private string BaseDescription => $"{WorkArea?.Name} {MaterialRecord?.Material?.Name}";
 
@@ -87,63 +78,36 @@ namespace Sample
             }
         }
 
-
         public virtual decimal AmountPerContainer
         {
-            get 
+            get
             {
                 return 0;
             }
         }
-        
-            
-            
-            
-        
 
         public virtual decimal ContainersRequired
         {
             get
-            { 
+            {
                 return 0;
             }
         }
 
         public virtual string ContainerName
         {
-            get 
-            { 
-                return ""; 
-            }
-        }
-
-
-        
-      
-        public virtual decimal MaterialCost
-        {
             get
-            { 
-                throw new InvalidOperationException("Invalid Material Type");
+            {
+                return "";
             }
-            
         }
+
+
+
     }
 
-
-
-    public abstract class ProfitClass
+        public abstract class ProfitClass :LineItem
     {
-
-        private MaterialClass materialClass = new MaterialClass();
-
-        public decimal Price { get; set; }
-        public decimal Quantity { get; internal set; } = 0;
-        public decimal LaborRate { get; internal set; } = 0;
-        public decimal MarkUp { get; internal set; } = 0;
-        public decimal TaxRate { get; internal set; } = .1M;
-        public MaterialCategoryEnum Category { get; internal set; }
-
 
         public void UpdateEstimatedFields(decimal containersRequired, decimal taxRate)
         {
@@ -161,7 +125,7 @@ namespace Sample
         {
             get
             { 
-                return Total - (TotalLabor + materialClass.MaterialCost) - (materialClass.MaterialCost * TaxRate) - (TotalLabor * Settings.Instance.TotalLaborSurchargePercent);
+                return Total - (TotalLabor + MaterialCost) - (MaterialCost * TaxRate) - (TotalLabor * Settings.Instance.TotalLaborSurchargePercent);
             }
         }
         public decimal UnitPrice => Total / (Quantity == 0 ? 1 : Quantity);
@@ -176,8 +140,8 @@ namespace Sample
                 
                         decimal markup = MarkUp != 0 ? MarkUp : 1;
                         decimal adjustedLaborRate = (LaborRate * Quantity) / markup;
-                        decimal adjustedMaterialCost = materialClass.MaterialCost / markup;
-                        decimal tax = materialClass.MaterialCost * TaxRate;
+                        decimal adjustedMaterialCost = MaterialCost / markup;
+                        decimal tax = MaterialCost * TaxRate;
                         decimal laborRateSurcharge = (LaborRate * Quantity * Settings.Instance.TotalLaborSurchargePercent);
                         return Helper.RoundUp(adjustedMaterialCost + adjustedLaborRate + tax + laborRateSurcharge, 2);
                 
@@ -186,15 +150,15 @@ namespace Sample
     }
 
 
-
-  
+    
 
     #endregion
 
     public abstract class LineItem
     {
-       
-        private MaterialClass materialClass = new MaterialClass();
+
+        // private MaterialClass materialClass = new MaterialClass();
+
 
         public decimal Price { get; set; }
         public int EstimateId { get; internal set; }
@@ -218,10 +182,16 @@ namespace Sample
         public int? WorkAreaId { get; internal set; }
         public WorkArea WorkArea { get; internal set; }
         public List<ReplacedLineItem> ReplacedLineItems { get; internal set; }
-        public decimal TaxAmount => materialClass.MaterialCost * TaxRate;
+        public decimal TaxAmount => MaterialCost * TaxRate;
         public LineItemCategoryEnum LineItemCategory { get; internal set; }
         public MaterialCategoryEnum Category { get; internal set; }
         public int? WorkOrderId { get; internal set; }
+
+        public abstract decimal MaterialCost
+        {
+            get;
+        }
+
 
         internal void MarkReplaced()
         {
