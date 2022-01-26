@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Sample
 {
-    class FeeLineItem: LineItem
+    public abstract class FeeLineItem: LineItem
     {
         public override decimal MaterialCost => 0;
 

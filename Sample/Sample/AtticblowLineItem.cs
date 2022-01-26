@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Sample
 {
-    public class AtticblowLineItem : MaterialClass
+    public abstract class AtticblowLineItem : LineItem
     {
         public override decimal AmountPerContainer { get { return Settings.Instance.AtticBlowSqftBase / MaterialRecord.GetRValue((RValueEnum)(RValue ?? 0)); } };
         public override decimal ContainersRequired => Quantity / AmountPerContainer;

@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Ruj\\Desktop\\TechnicalTraining\\SOLIDTrainingExercise\\Sample\\Sample\\Sample.csproj": {}
+    "C:\\Users\\ruj.haan\\Desktop\\Technical Training\\Design Principles\\SOLIDTrainingExercise\\Sample\\Sample\\Sample.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Ruj\\Desktop\\TechnicalTraining\\SOLIDTrainingExercise\\Sample\\Sample\\Sample.csproj": {
+    "C:\\Users\\ruj.haan\\Desktop\\Technical Training\\Design Principles\\SOLIDTrainingExercise\\Sample\\Sample\\Sample.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Ruj\\Desktop\\TechnicalTraining\\SOLIDTrainingExercise\\Sample\\Sample\\Sample.csproj",
+        "projectUniqueName": "C:\\Users\\ruj.haan\\Desktop\\Technical Training\\Design Principles\\SOLIDTrainingExercise\\Sample\\Sample\\Sample.csproj",
         "projectName": "Sample",
-        "projectPath": "C:\\Users\\Ruj\\Desktop\\TechnicalTraining\\SOLIDTrainingExercise\\Sample\\Sample\\Sample.csproj",
-        "packagesPath": "C:\\Users\\Ruj\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Ruj\\Desktop\\TechnicalTraining\\SOLIDTrainingExercise\\Sample\\Sample\\obj\\",
+        "projectPath": "C:\\Users\\ruj.haan\\Desktop\\Technical Training\\Design Principles\\SOLIDTrainingExercise\\Sample\\Sample\\Sample.csproj",
+        "packagesPath": "C:\\Users\\ruj.haan\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\ruj.haan\\Desktop\\Technical Training\\Design Principles\\SOLIDTrainingExercise\\Sample\\Sample\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\Ruj\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\ruj.haan\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -68,7 +68,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.102\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.301\\RuntimeIdentifierGraph.json"
         }
       }
     }

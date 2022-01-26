@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Sample
 {
-    class FiberglassLineItem : MaterialClass
+    public abstract class FiberglassLineItem : LineItem
     {
         public override decimal AmountPerContainer => MaterialRecord.AmountPerContainer.Value;
         public override decimal ContainersRequired => Quantity / AmountPerContainer;

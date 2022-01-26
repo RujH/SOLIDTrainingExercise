@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Sample
 {
-    class FoamLineItem : MaterialClass
+    public abstract class FoamLineItem : LineItem
     {
         public override decimal AmountPerContainer => (Quantity * Depth.Value) / Yield.Value;
         public override decimal ContainersRequired => AmountPerContainer;
